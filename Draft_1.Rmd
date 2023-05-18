@@ -1,0 +1,64 @@
+---
+title: "Global Health"
+subtitle: "Health Expenditure"
+author: "Madhab Bikash Dev Roy"
+institute: "Monash Business School"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: css/style.css
+    yolo: FALSE
+---
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r , echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(datasets)
+```
+
+
+class: center, middle
+![](https://media.giphy.com/media/OkJat1YNdoD3W/giphy.gif)
+
+
+---
+class: left, top
+
+# INTRODUCTION
+
+- .green[ Studying global health through health expenditure is important because it provides insight into the effectiveness of healthcare systems in different countries, helps identify disparities in health outcomes, and explores the relationship between health and economic growth.]
+- .red[By analyzing health expenditure, policymakers can make informed decisions to prioritize healthcare investment and improve global health outcomes.]
+- .green[ We will discuss the impact of health expenditure on global health in five areas: the relationship between health expenditure and GDP, child mortality, life expectancy, maternal mortality, and disability-adjusted life years (DALYs) in each country.]
+- .red[ After the analysis, a clear explanation of the findings and the potential reasons behind the circumstance are depicted, and the recommendations based on the study will be provided as well.]
+
+
+---
+class:  left, top
+# RESULTS & DISCUSSION
+- .red[ A strong correlation exists between per capita GDP and health expenditure. It is obvious from the following figure]
+
+```{r graph_madhab, fig.align="center", fig.height = 3, fig.width = 11, echo = FALSE, message = FALSE, warning = FALSE}
+gdp_income <- read_csv(here::here("Data/healthcare-expenditure-vs-gdp.csv"))
+gdp_income_graph <- gdp_income %>% select(-Code, -`Population (historical estimates)`, -Continent) %>% rename(Country = Entity, health_expenditure_per_capita_in_USD = `Current health expenditure per capita, PPP (current international $)`, GDP_per_capita_in_USD = `GDP per capita, PPP (current international $)`) %>% filter(Year == 2019) %>% filter(!is.na(GDP_per_capita_in_USD)) %>%
+  filter(!is.na(health_expenditure_per_capita_in_USD))
+ggplot(gdp_income_graph,
+       aes(x = GDP_per_capita_in_USD,
+           y = health_expenditure_per_capita_in_USD)) + 
+  geom_point()  + geom_line() + 
+  labs(x= "GDP Per Capita in USD", y= "Health Expenditure per capita in USD") 
+  
+```
+- .tiny[.bold[Fig: Relationship between GDP and Health Expenditure per capita across countries in 2019]]
+- .green[ The countries that have more per capita GDP, are more likely to spend on healthcare. This is clearly applicable for those countries whose per capita GDP is below 60,000 GDP. However, few countries with per capita GDP more than 60,000 USD shows some variations.]
+
+---
+
+
+```{r endslide, child="EndSlide/endslide.Rmd"}
+```  
+
